@@ -15,6 +15,7 @@ export default class Client {
 
   postLogin = (body) => this.postWithoutAuth(this.baseUrl + 'authenticate', body)//returns a jwt
   getOrders = () => this.fetchWithAuth(this.baseUrl + 'api/orders')//returns array of items
+  updateOrder = (id,body) => this.putWithAuth(this.baseUrl + 'api/orders/' + id, body)//returns array of items
   
   fetchWithAuth = (url) => (
     fetch(url, {

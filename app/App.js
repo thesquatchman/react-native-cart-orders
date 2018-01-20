@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Router, Stack, Scene, Actions, ActionConst } from 'react-native-router-flux';
+import { Router, Stack, Scene, Actions } from 'react-native-router-flux';
 import { setToken, getToken, clearToken } from './api/Storage'
 
 import Login from './containers/Login';
 import Home from './containers/Home';
-import Orders from './containers/Orders';
+import Order from './containers/Order';
 
 export default class App extends Component {
   constructor(props) {
@@ -36,7 +36,7 @@ export default class App extends Component {
         <Stack key="root">
           <Scene key="login" token={this.state.token} passProps onReceivedToken={this._receivedToken.bind(this)} component={Login} title="Login"/>
           <Scene key="home" token={this.state.token} passProps  component={Home}/>
-          <Scene key="orders" token={this.state.token} passProps  component={Orders} title="Orders"/>
+          <Scene key="order" token={this.state.token} passProps  component={Order} title="Order"/>
         </Stack>
       </Router>
     );
