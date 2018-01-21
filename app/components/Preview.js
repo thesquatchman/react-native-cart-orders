@@ -17,7 +17,7 @@ export default class Preview extends Component {
   render() {
     const { order } = this.props
     return (
-      <View>
+      <View style={this.props.updated ? style.updated : style.preview}>
         <TouchableOpacity
         onPress={this._onPressOrder.bind(this)}>
                   <Text>Order# {order._id}</Text>
@@ -28,3 +28,17 @@ export default class Preview extends Component {
     );
   }
 }
+const style = StyleSheet.create({
+  updated: {
+    flex: 1,
+    backgroundColor: 'lightgreen',
+    padding: 5,
+    marginTop: 20
+  },
+  preview: {
+    flex: 1,
+    backgroundColor: '#f3f3f3',
+    padding: 5,
+    marginTop: 20
+  },
+});

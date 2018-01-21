@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {View,TextInput,StyleSheet,TouchableOpacity,Text} from 'react-native';
+import s from '../styles/global'
 import Client from '../api/Client'
 
 
@@ -36,15 +37,20 @@ export default class Login extends Component {
 
   render() {
     return (
-      <View>
-        <TextInput style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+      <View style={s.container}>
+        <TextInput style={s.input}
+        placeholder={'email'}
+        autoCapitalize={'none'}
         onChangeText={(email) => this.setState({email})}
         value={this.state.email}/>
-        <TextInput style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+        <TextInput style={s.input}
+        placeholder={'password'}
+        autoCapitalize={'none'}
+        secureTextEntry
         onChangeText={(password) => this.setState({password})}
         value={this.state.password}/>
         <TouchableOpacity onPress={this._onPressButton.bind(this)}>
-          <Text>Submit</Text>
+          <Text style={s.btn}>Submit</Text>
         </TouchableOpacity>
 
       </View>

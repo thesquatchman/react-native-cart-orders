@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import {View,FlatList,TouchableOpacity,Text,RefreshControl} from 'react-native'
+import {View,FlatList,TouchableOpacity,Text,RefreshControl,StyleSheet} from 'react-native'
 import { Router, Stack, Scene, Actions } from 'react-native-router-flux';
-
+import s from '../styles/global'
 import Client from '../api/Client'
 import { setToken, getToken, clearToken } from '../api/Storage'
 
@@ -23,9 +23,10 @@ export default class Home extends Component {
 
   componentDidMount() {
     console.log(this.props)
-    this._fetchData()
-    
+    this._fetchData() 
   }
+
+
 
   _fetchData = () => {
     const {token} = this.props
@@ -64,6 +65,7 @@ export default class Home extends Component {
 
   _renderItem = ({item}) => (
     <Preview
+      updated={this.props.updated && this.props.updated._id == item._id ? true : false}
       order={item}
       onPressItem={this._onPressItem}>
     </Preview>
@@ -71,8 +73,8 @@ export default class Home extends Component {
 
   render() {
     return (
-      <View>
-        <Text>Home</Text>
+      <View style={s.container}>
+        <Text style={s.heading}>Orders:</Text>
         { this.state.error ? <Text>{this.state.error}</Text> :
          <FlatList
             data={this.state.data}

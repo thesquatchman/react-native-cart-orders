@@ -34,9 +34,9 @@ export default class App extends Component {
     return (
       <Router>
         <Stack key="root">
-          <Scene key="login" token={this.state.token} passProps onReceivedToken={this._receivedToken.bind(this)} component={Login} title="Login"/>
-          <Scene key="home" token={this.state.token} passProps  component={Home}/>
-          <Scene key="order" token={this.state.token} passProps  component={Order} title="Order"/>
+          <Scene key="login" hideNavBar onReceivedToken={this._receivedToken.bind(this)} component={Login} title="Login"/>
+          <Scene key="home" hideNavBar component={Home}/>
+          <Scene key="order" component={Order} title="Order"/>
         </Stack>
       </Router>
     );

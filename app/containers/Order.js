@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {View,Text,TextInput,TouchableOpacity,StyleSheet} from 'react-native';
 import { Actions } from 'react-native-router-flux'
+import s from '../styles/global'
 import Client from '../api/Client'
 import { setToken, getToken, clearToken } from '../api/Storage'
 
@@ -26,7 +27,7 @@ export default class Order extends Component {
         if (result.success) {
           //the token is good
           this.setState({updating: false})
-          Actions.pop()
+          Actions.home({updated: result.order, token})
         } else {
           //he token is no good
           clearToken()
@@ -47,31 +48,37 @@ export default class Order extends Component {
           <Text>updating order...</Text>
         </View>
       ) : (
-      <View>
+      <View style={s.container}>
         <Text>Order {order._id} : {order.status}</Text>
         <Text>Created At {order.createdAt}</Text>
         <Text>{order.firstname} {order.lastname}</Text>
         <Text>{order.email}</Text>
-
-        <Text>Status</Text>
-        
-        <TouchableOpacity 
-        onPress={() => this.setState({status: 'pending'})}>
-          <Text style={this.state.status == 'pending' ? styles.pressed : styles.unpressed }>
-          Pending</Text>
-        </TouchableOpacity>
-        <TouchableOpacity 
-        onPress={() => this.setState({status: 'shipped'})}>
-          <Text style={this.state.status == 'shipped' ? styles.pressed : styles.unpressed }>
-          Shipped</Text>
-        </TouchableOpacity>
-
-        
-        <TextInput style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+        { order.items.length > 0 ? order.items.map((item) => 
+          <View  key={item.id} style={styles.item}>
+            <Text>{item.title}</Text>
+            <Text>{item.qty}</Text>
+            <Text>{item.formattedPrice}</Text>
+          </View>
+          ) : null }
+        <Text>Status:</Text>
+        <View style={styles.row}>
+          <TouchableOpacity style={{flex:1}}
+          onPress={() => this.setState({status: 'pending'})}>
+            <Text style={this.state.status == 'pending' ? styles.pressed : styles.unpressed }>
+            Pending</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={{flex:1}}
+          onPress={() => this.setState({status: 'shipped'})}>
+            <Text style={this.state.status == 'shipped' ? styles.pressed : styles.unpressed }>
+            Shipped</Text>
+          </TouchableOpacity>
+        </View>
+        <Text>Tracking Number:</Text>
+        <TextInput style={s.input} 
         onChangeText={(tracking) => this.setState({tracking})}
         value={this.state.tracking}/>
         <TouchableOpacity onPress={this._onSubmitChanges.bind(this)}>
-          <Text>Submit Changes</Text>
+          <Text  style={s.btn} >Submit Changes</Text>
         </TouchableOpacity>
       </View>
     );
@@ -79,13 +86,28 @@ export default class Order extends Component {
 }
 
 const styles = StyleSheet.create({
-  pressed: {
-    color: 'blue',
-    fontSize: 20,
+  item: {
+    padding: 10
+  },
+  row: {
+    flexDirection: 'row',
   },
   unpressed: {
-    color: 'gray',
+    textAlign: 'center',
     fontSize: 20,
+    padding: 5,
+    backgroundColor: '#f3f3f3',
+    margin: 5,
   },
+  pressed: {
+    textAlign: 'center',
+    fontSize: 20,
+    padding: 5,
+    backgroundColor: 'blue',
+    color: 'white',
+    margin: 5
+  },
+
+  
 });
 
